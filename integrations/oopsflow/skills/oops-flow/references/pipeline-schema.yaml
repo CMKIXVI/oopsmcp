@@ -1,0 +1,30 @@
+pipeline:
+  id: string
+  name: string
+  version: integer
+  description: string|null
+  state: DRAFT|VALIDATED|TESTED|APPROVED|PUBLISHED|ACTIVE|RETIRED
+  inputs: object
+  outputs: object
+  stages:
+    - id: string
+      name: string
+      workflow: string|null
+      mode: auto|native|desktop|mcp
+      inputs: object
+      outputs: object
+      retry: integer
+      timeout_seconds: integer
+      approval: auto|required
+      verify: object
+  dependencies:
+    - from: string
+      to: string
+  policy:
+    on_failure: stop|continue|rollback
+    max_runtime_seconds: integer
+    max_parallel: integer
+  environment:
+    development: object
+    testing: object
+    production: object
