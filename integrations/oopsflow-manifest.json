@@ -1,0 +1,13 @@
+{
+  "name": "OopsFlow",
+  "version": "3.2.0",
+  "integration": "embedded",
+  "purpose": "Workflow/agent pipeline capability exposed through OopsMCP",
+  "source_archive": "integrations/oopsflow",
+  "mcp_namespace": "oopsflow",
+  "recommended_tools": [
+    "oopsflow.list_pipelines",
+    "oopsflow.get_pipeline",
+    "oopsflow.run_pipeline"
+  ]
+}
