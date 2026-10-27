@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { capabilities } from "@/lib/capabilities";
+import { executeCapability } from "@/lib/capability-runtime";
 import { requireUser } from "@/lib/auth";
 
 export async function POST(request: Request) {
@@ -10,13 +11,12 @@ export async function POST(request: Request) {
   const tool = capabilities.find((item) => item.id === body.toolId);
   if (!tool) return NextResponse.json({ error: "Unknown OopsMCP tool" }, { status: 404 });
 
-  return NextResponse.json({
-    capability: tool.id,
-    name: tool.name,
-    role: tool.role,
-    status: "not_implemented",
-    values: body.values || {},
-    message: `The UI and capability registry recognize ${tool.name}, but no production provider is connected yet. No external action was performed.`,
-    protocol: "MCP",
-  }, { status: 501 });
+  const execution = await executeCapability(
+    tool,
+    typeof body.input === "string" ? body.input : undefined,
+    body.values && typeof body.values === "object" ? body.values : {},
+  );
+
+  const httpStatus = execution.status === "executed" ? 200 : execution.status === "failed" ? 500 : 501;
+  return NextResponse.json({ ...execution, protocol: "MCP" }, { status: httpStatus });
 }
