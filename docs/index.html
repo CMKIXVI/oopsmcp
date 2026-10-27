@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OopsMCP — Deploy & Help</title>
+  <meta name="description" content="OopsMCP deployment, installation and help center.">
+  <style>
+    :root{--bg:#f6f6f2;--fg:#171717;--muted:#666;--card:#fff;--line:#ddd;--accent:#111;--soft:#eee}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .wrap{max-width:1080px;margin:auto;padding:28px 20px 70px}.nav{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:8px 0 28px}.brand{font-size:22px;font-weight:800}.nav a{color:inherit;text-decoration:none;margin-left:18px}.hero{padding:55px 0 35px}.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}h1{font-size:clamp(42px,7vw,76px);line-height:1;margin:12px 0 20px;letter-spacing:-.05em}h2{margin-top:46px;font-size:30px;letter-spacing:-.03em}h3{margin-bottom:8px}.lead{max-width:760px;font-size:20px;color:#444}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:12px 18px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}.step{display:flex;gap:16px}.num{flex:0 0 34px;height:34px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:800}.code{background:#111;color:#fff;border-radius:10px;padding:14px 16px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}.note{background:var(--soft);border-radius:12px;padding:15px 17px;color:#444}.field{display:flex;gap:8px;max-width:700px}.field input{flex:1;border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;background:#fff}.small{font-size:14px;color:var(--muted)}footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}
+    @media(max-width:650px){.nav{align-items:flex-start}.nav div:last-child{display:none}.field{flex-direction:column}.field .btn{width:100%}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><div class="brand">OopsMCP</div><div><a href="#deploy">Deploy</a><a href="#help">Help</a><a href="https://github.com/CMKIXVI/oopsmcp">GitHub</a></div></nav>
+
+  <section class="hero">
+    <div class="eyebrow">v1.5.0 · MCP capability toolbox</div>
+    <h1>Fork first.<br>Deploy second.</h1>
+    <p class="lead">OopsMCP is designed so every user gets their own GitHub copy first. Your fork becomes the source of truth, and that fork is then deployed to your own Vercel project.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/CMKIXVI/oopsmcp/fork">① Fork OopsMCP</a>
+      <a class="btn" href="#deploy">② Deploy my fork</a>
+      <a class="btn" href="#help">Help & setup</a>
+    </div>
+    <div class="note"><b>Architecture:</b> GitHub fork → your repository → Vercel project → your OopsMCP Studio + MCP endpoint.</div>
+  </section>
+
+  <section id="deploy">
+    <h2>Deploy your own OopsMCP</h2>
+    <div class="grid">
+      <div class="card step"><div class="num">1</div><div><h3>Fork</h3><p>Click Fork and create <code>oopsmcp</code> under your GitHub account.</p><a class="btn primary" href="https://github.com/CMKIXVI/oopsmcp/fork">Fork on GitHub</a></div></div>
+      <div class="card step"><div class="num">2</div><div><h3>Enter your GitHub username</h3><p class="small">Use the account that owns your new fork.</p><div class="field"><input id="gh" placeholder="your-github-username" autocomplete="username"><button class="btn primary" onclick="deploy()">Deploy my fork</button></div></div></div>
+      <div class="card step"><div class="num">3</div><div><h3>Finish in Vercel</h3><p>Vercel opens with your fork selected. Choose the Vercel account/team, configure Supabase if needed, and deploy.</p></div></div>
+    </div>
+    <p id="status" class="small" style="margin-top:14px"></p>
+    <script>
+      function deploy(){
+        const u=document.getElementById('gh').value.trim().replace(/^@/,'');
+        const status=document.getElementById('status');
+        if(!/^[A-Za-z0-9-]+$/.test(u)){status.textContent='Enter a valid GitHub username.';return;}
+        const repo='https://github.com/'+u+'/oopsmcp';
+        const url='https://vercel.com/new/clone?demo-title=OopsMCP&demo-description=Your%20personal%20OopsMCP%20MCP%20toolbox&project-name=oopsmcp&repository-name=oopsmcp&repository-url='+encodeURIComponent(repo)+'&from=templates&skippable-integrations=1';
+        status.textContent='Opening Vercel for '+repo+' …';
+        window.location.href=url;
+      }
+    </script>
+  </section>
+
+  <section id="help">
+    <h2>Complete help</h2>
+    <div class="grid">
+      <div class="card"><h3>What is OopsMCP?</h3><p>A role-based MCP toolbox with 500 practical capabilities, 25 roles, dedicated tool UIs, an MCP endpoint, memory/content support and an embedded OopsFlow integration.</p></div>
+      <div class="card"><h3>What gets deployed?</h3><p>Your fork contains the application source. Vercel builds that source into your private deployment. You control the repository, deployment and environment variables.</p></div>
+      <div class="card"><h3>MCP endpoint</h3><p>After deployment:</p><div class="code">https://YOUR-PROJECT.vercel.app/mcp</div></div>
+      <div class="card"><h3>Studio</h3><p>The web workspace is:</p><div class="code">https://YOUR-PROJECT.vercel.app/</div></div>
+      <div class="card"><h3>Tool UI</h3><p>Every registered capability has a dedicated route:</p><div class="code">/tools/&lt;tool-id&gt;</div></div>
+      <div class="card"><h3>Install page</h3><p>The deployed app includes a quick setup page:</p><div class="code">/install</div></div>
+    </div>
+
+    <h2>Supabase setup</h2>
+    <div class="card">
+      <p>Supabase is optional for the basic capability registry but required for persistent auth, memory and content storage.</p>
+      <ol><li>Create a Supabase project.</li><li>Run <code>supabase/schema.sql</code> in the SQL editor.</li><li>In Vercel, add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>.</li><li>Redeploy if Vercel does not automatically rebuild after the environment variables are added.</li></ol>
+    </div>
+
+    <h2>Local development</h2>
+    <div class="code">git clone https://github.com/YOUR-USERNAME/oopsmcp.git
+cd oopsmcp
+npm install
+npm run dev</div>
+    <p class="small">Open <code>http://localhost:3000</code>.</p>
+
+    <h2>Architecture</h2>
+    <div class="grid">
+      <div class="card"><h3>GitHub</h3><p>Source control, your fork, customization and version history.</p></div>
+      <div class="card"><h3>Vercel</h3><p>Build and runtime for the web application and MCP endpoint.</p></div>
+      <div class="card"><h3>Supabase</h3><p>Authentication, persistence, memory and content metadata.</p></div>
+      <div class="card"><h3>OopsFlow</h3><p>Workflow and pipeline execution layer that consumes OopsMCP capabilities.</p></div>
+    </div>
+
+    <h2>FAQ</h2>
+    <div class="grid">
+      <div class="card"><h3>Why fork first?</h3><p>Your GitHub repository remains the source you own and customize. Vercel deploys your copy instead of making the upstream OopsMCP repository your source of truth.</p></div>
+      <div class="card"><h3>Can I update later?</h3><p>Yes. Pull upstream changes into your fork when you want them, review them, and redeploy from your fork.</p></div>
+      <div class="card"><h3>Do I need Supabase?</h3><p>Not for the basic static capability experience. Add it when you need persistent authentication, memory or content storage.</p></div>
+      <div class="card"><h3>Where is the MCP URL?</h3><p>Use the deployed Vercel URL followed by <code>/mcp</code>. Register that endpoint in an MCP-capable client.</p></div>
+    </div>
+  </section>
+
+  <footer>OopsMCP · Open source capability toolbox · <a href="https://github.com/CMKIXVI/oopsmcp">GitHub repository</a></footer>
+</div>
+</body>
+</html>
