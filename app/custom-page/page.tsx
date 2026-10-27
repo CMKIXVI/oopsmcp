@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function CustomPage(){return <main className="p-10"><h1 className="text-2xl font-semibold">OopsMCP</h1><p className="mt-2 text-black/60">Use the main OopsMCP Studio.</p><Link className="underline mt-4 inline-block" href="/">Back to Studio</Link></main>}
