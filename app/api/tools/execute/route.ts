@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { capabilities } from "@/lib/capabilities";
+import { requireUser } from "@/lib/auth";
 
 export async function POST(request: Request) {
+  const auth = await requireUser();
+  if (auth.response) return auth.response;
   const body = await request.json().catch(() => ({}));
   const tool = capabilities.find((item) => item.id === body.toolId);
   if (!tool) return NextResponse.json({ error: "Unknown OopsMCP tool" }, { status: 404 });
