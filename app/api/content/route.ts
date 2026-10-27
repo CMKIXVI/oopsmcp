@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getContent, upsertContent } from "@/lib/db";
+import { requireUser } from "@/lib/auth";
 import { z } from "zod";
 
 export async function GET() {
@@ -11,6 +12,8 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
+  const auth = await requireUser();
+  if (auth.response) return auth.response;
   const parsed = schema.safeParse(await req.json());
   if (!parsed.success) return NextResponse.json({ error: "Invalid content item", details: parsed.error.flatten() }, { status: 400 });
   const item = await upsertContent(parsed.data);
