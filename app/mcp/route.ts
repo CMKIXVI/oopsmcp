@@ -1,6 +1,7 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 import { getContent } from "@/lib/db";
+import { requireMcpKey } from "@/lib/auth";
 import { capabilities, FUNCTIONAL_TOOL_COUNT } from "@/lib/capabilities";
 
 const capabilityInput = { input: z.string().optional().describe("Natural-language request or primary input for this capability."), data: z.record(z.any()).optional().describe("Optional structured input for the capability.") };
@@ -18,5 +19,11 @@ const handler = createMcpHandler(async (server) => {
   server.registerResource("personal-profile", "knowledge://profile", { title: "Personal Profile", description: "OopsMCP server profile.", mimeType: "text/plain" }, async (uri) => ({ contents: [{ uri: uri.href, mimeType: "text/plain", text: `OopsMCP\nFunctional capabilities: ${FUNCTIONAL_TOOL_COUNT}\nRole-based capability discovery: enabled\nEndpoint: /mcp\nContent managed through OopsMCP Studio.` }] }));
 });
 
-export const GET = handler;
-export const POST = handler;
+async function authorizedHandler(request: Request) {
+  const rejection = requireMcpKey(request);
+  if (rejection) return rejection;
+  return handler(request);
+}
+
+export const GET = authorizedHandler;
+export const POST = authorizedHandler;
