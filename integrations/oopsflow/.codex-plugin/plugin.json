@@ -1,0 +1,18 @@
+{
+  "interface": {
+    "capabilities": ["Interactive"],
+    "category": "Productivity",
+    "displayName": "OopsFlow",
+    "shortDescription": "Build, configure and run portable workflows and pipelines",
+    "longDescription": "Model-neutral workflow and pipeline automation for ChatGPT, Claude, Gemini, Desktop/local and MCP. No OopsFlow-hosted backend required.",
+    "developerName": "Chandra Mouli Krishna Moorthy",
+    "defaultPrompt": ["Configure a pipeline from my requirements.", "Build and validate a workflow.", "Preview or run this pipeline using the best available execution mode.", "Show execution state and audit history."]
+  },
+  "name": "oops-flow",
+  "version": "3.2.0",
+  "description": "Model-neutral workflow, pipeline and automation runtime for ChatGPT, Claude, Gemini, Desktop/local and MCP execution.",
+  "author": {"name": "Chandra Mouli Krishna Moorthy", "email": "cmklive@gmail.com"},
+  "keywords": ["workflow", "pipeline", "automation", "mcp", "gemini", "claude", "chatgpt"],
+  "skills": "./skills",
+  "mcpServers": "./.mcp.json"
+}
