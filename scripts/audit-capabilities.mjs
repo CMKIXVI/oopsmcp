@@ -11,6 +11,15 @@ const expectedRoles = [
   "home_family", "vehicle_travel", "office_documents_ai",
 ];
 
+const roleFallbackTemplates = {
+  personal_user: "schedule", business_owner: "finance", sales: "search", crm_customer_success: "search",
+  finance_accountant: "finance", inventory_store: "data", procurement_purchase: "document", billing_ar: "finance",
+  india_gst: "finance", us_tax: "finance", freelancer: "schedule", hr_employee: "schedule", student: "education",
+  teacher: "education", marketing: "communication", whatsapp_communication: "communication", operations: "schedule",
+  data_analyst: "data", developer: "developer", it_technical: "developer", project_manager: "schedule",
+  ecommerce: "search", home_family: "schedule", vehicle_travel: "calculator", office_documents_ai: "document",
+};
+
 const source = dataFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 const rowPattern = /\[\s*\"([^\"]+)\"\s*,\s*\"([^\"]+)\"\s*,\s*\"([^\"]+)\"\s*\]/g;
 const rows = [...source.matchAll(rowPattern)].map((m) => ({ id: m[1], name: m[2], role: m[3] }));
@@ -28,9 +37,9 @@ const uiRules = [
   ["search", /search|lookup|finder|directory|contacts|customer|lead|supplier|vendor|product|catalogue|portfolio/i],
 ];
 
-const templateFor = (name) => {
+const templateFor = (name, role) => {
   for (const [template, rule] of uiRules) if (rule.test(name.toLowerCase())) return template;
-  return "form";
+  return roleFallbackTemplates[role] ?? "form";
 };
 
 const counts = Object.fromEntries(expectedRoles.map((role) => [role, 0]));
@@ -45,7 +54,7 @@ for (const row of rows) {
   if (seen.has(row.id)) duplicateIds.push(row.id);
   seen.add(row.id);
   if (!row.id || !row.name || !row.role) empty.push(row);
-  const template = templateFor(row.name);
+  const template = templateFor(row.name, row.role);
   templateCounts[template] = (templateCounts[template] ?? 0) + 1;
   if (template === "form") generic.push(row);
 }
@@ -87,4 +96,4 @@ if (failed) {
 }
 
 console.log("\nAUDIT PASSED: registry integrity is correct.");
-console.log("Note: generic-form count is a UI-quality signal, not a registry failure.");
+console.log("UI classification now includes role-aware fallback templates; generic-form count is a UI-quality signal.");
