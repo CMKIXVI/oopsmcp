@@ -1,5 +1,6 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
+import "@/lib/builtin-providers";
 import { getContent } from "@/lib/db";
 import { requireMcpKey } from "@/lib/auth";
 import { capabilities, FUNCTIONAL_TOOL_COUNT } from "@/lib/capabilities";
