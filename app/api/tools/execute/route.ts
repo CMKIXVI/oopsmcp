@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import "@/lib/builtin-providers";
 import { capabilities } from "@/lib/capabilities";
 import { executeCapability } from "@/lib/capability-runtime";
 import { requireUser } from "@/lib/auth";
