@@ -1,0 +1,10 @@
+{
+  "name": "OopsMCP",
+  "short_name": "OopsMCP",
+  "description": "Personal MCP capability server and studio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f7f5",
+  "theme_color": "#171717",
+  "icons": []
+}
