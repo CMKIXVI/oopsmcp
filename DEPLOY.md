@@ -1,51 +1,63 @@
 # OopsMCP Deployment & Help
 
-## The intended deployment flow
+## Official deployment flow
 
-OopsMCP uses a **fork-first** model:
+OopsMCP is intentionally **fork-first**. The official repository is the source/template. Your fork becomes your installation source, and your Vercel project deploys that fork.
 
-1. Fork `CMKIXVI/oopsmcp` into your own GitHub account.
-2. Deploy **your fork** to Vercel.
-3. Your GitHub fork remains the source of truth for your deployment.
-4. Configure Supabase when you need persistent auth, memory and content storage.
+```text
+CMKIXVI/oopsmcp
+      ↓
+   Fork first
+      ↓
+YOUR-GITHUB-USERNAME/oopsmcp
+      ↓
+Deploy your fork to Vercel
+      ↓
+YOUR Vercel project
+      ↓
+Configure MCP address
+      ↓
+https://YOUR-DOMAIN/mcp
+```
 
-## GitHub Pages help center
-
-The repository includes a complete static deployment/help page in `docs/index.html`.
-
-After enabling GitHub Pages with **GitHub Actions** as the source, it is published at:
-
-`https://CMKIXVI.github.io/oopsmcp/`
-
-The page provides the Fork → Deploy flow, generates a Vercel deploy link for the user's fork, setup instructions, architecture, FAQ and endpoint information.
-
-### Enable Pages once
-
-In the GitHub repository:
-
-`Settings → Pages → Build and deployment → Source: GitHub Actions`
-
-The workflow is already included at `.github/workflows/pages.yml`.
-
-## Fork
+## 1. Fork OopsMCP
 
 Use:
 
 `https://github.com/CMKIXVI/oopsmcp/fork`
 
-Create the fork under the GitHub account that should own the deployment.
+Create the fork under the GitHub account that should own the installation.
 
-## Vercel
+Your repository should then be:
 
-After the fork exists, use the GitHub Pages help page or Vercel import flow and select the user's fork. The deployment URL must point to the user's repository, for example:
+`https://github.com/YOUR-GITHUB-USERNAME/oopsmcp`
 
-`https://github.com/YOUR-USERNAME/oopsmcp`
+## 2. Deploy your fork to Vercel
 
-Do **not** deploy the upstream `CMKIXVI/oopsmcp` repository when creating a personal installation.
+Sign in to Vercel with the account that should own the deployment.
 
-## Supabase
+Import **your fork**:
 
-Run `supabase/schema.sql` in the Supabase SQL editor.
+`YOUR-GITHUB-USERNAME/oopsmcp`
+
+Vercel then builds and deploys your repository into your Vercel account.
+
+**Do not deploy the upstream `CMKIXVI/oopsmcp` repository as your personal installation.**
+
+Recommended settings:
+
+- Framework: Next.js
+- Build command: `npm run build`
+- Install command: `npm install`
+- Output: Next.js default
+
+## 3. Configure Supabase
+
+Supabase is optional for the basic capability registry. Use your own Supabase project when you need persistent authentication, memory and content storage.
+
+Run:
+
+`supabase/schema.sql`
 
 Set these Vercel environment variables:
 
@@ -57,27 +69,45 @@ Optional:
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `DATABASE_URL`
 
-## Endpoints
+## 4. Configure your MCP address
+
+Every deployment exposes the MCP endpoint at:
+
+`https://YOUR-PROJECT.vercel.app/mcp`
+
+With a custom domain:
+
+`https://YOUR-DOMAIN/mcp`
+
+That is the address you register with your MCP-compatible clients.
+
+The MCP address belongs to **your installation**, not the upstream repository.
+
+## 5. Connect clients
+
+Use your configured MCP address with compatible clients such as ChatGPT, Claude, Gemini, IDEs and other MCP clients.
+
+## OopsMCP endpoints
 
 Studio:
 
-`https://YOUR_PROJECT.vercel.app/`
+`https://YOUR-PROJECT.vercel.app/`
 
 MCP:
 
-`https://YOUR_PROJECT.vercel.app/mcp`
+`https://YOUR-PROJECT.vercel.app/mcp`
 
 Install/help:
 
-`https://YOUR_PROJECT.vercel.app/install`
+`https://YOUR-PROJECT.vercel.app/install`
 
 Health:
 
-`https://YOUR_PROJECT.vercel.app/api/health`
+`https://YOUR-PROJECT.vercel.app/api/health`
 
 OopsFlow manifest:
 
-`https://YOUR_PROJECT.vercel.app/api/oopsflow`
+`https://YOUR-PROJECT.vercel.app/api/oopsflow`
 
 ## Dedicated tool UI
 
@@ -100,6 +130,24 @@ Then open `http://localhost:3000`.
 docker compose up --build
 ```
 
-## Important production notes
+## FAQ
+
+### Why fork first?
+
+Your GitHub repository remains the source you own and customize. Vercel deploys your copy instead of making the upstream repository your personal source of truth.
+
+### Can I use a custom MCP domain?
+
+Yes. Point your custom domain to the Vercel project and use `/mcp` as the MCP endpoint.
+
+### Can I update OopsMCP later?
+
+Yes. Pull or merge upstream changes into your fork, review them, and redeploy your fork.
+
+### Do I need Supabase?
+
+No for the basic capability experience. Add it when you need persistent auth, memory or content storage.
+
+## Production notes
 
 Before exposing a private/write-enabled OopsMCP instance publicly, add production MCP authentication/OAuth and protect content/memory mutation endpoints. The capability registry currently provides the common execution contract; individual provider implementations must be connected before claiming that a domain action actually executed.
