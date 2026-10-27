@@ -2,6 +2,32 @@
 
 OopsMCP is a role-based MCP toolbox with 500 practical capabilities and a dedicated UI workspace for every tool.
 
+## 🚀 Deploy OopsMCP — Fork First, Deploy Second
+
+**The intended flow is:**
+
+**Your GitHub → your fork → your Vercel → your OopsMCP**
+
+### 1. Fork OopsMCP to your GitHub
+
+[**🍴 Fork OopsMCP**](https://github.com/CMKIXVI/oopsmcp/fork)
+
+### 2. Deploy your fork to Vercel
+
+After the fork is created, use the [**OopsMCP Help & Deploy page**](https://CMKIXVI.github.io/oopsmcp/) to enter your GitHub username and generate a Vercel deployment link for **your fork**.
+
+This prevents the upstream `CMKIXVI/oopsmcp` repository from becoming the source of your personal deployment.
+
+### 3. Configure Supabase if needed
+
+Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` to the Vercel project when you want persistent authentication, memory and content storage.
+
+## Complete Help
+
+- [Deployment guide](DEPLOY.md)
+- [GitHub Pages Help & Deploy](https://CMKIXVI.github.io/oopsmcp/)
+- [Install page](https://github.com/CMKIXVI/oopsmcp/tree/main/app/install)
+
 ## What is included
 
 - 500 functional capabilities
@@ -14,11 +40,24 @@ OopsMCP is a role-based MCP toolbox with 500 practical capabilities and a dedica
 - OopsFlow integration bundle
 - Docker deployment
 - Vercel deployment
+- GitHub Pages deployment/help center
 - PWA manifest
 
-## Deploy with Vercel
+## Architecture
 
-[Deploy OopsMCP with Vercel](https://vercel.com/new/clone?demo-title=OopsMCP&demo-description=Deploy%20OopsMCP%3A%20a%20500-tool%20MCP%20capability%20studio%20with%20dedicated%20tool%20UIs.&project-name=oopsmcp&repository-name=oopsmcp&repository-url=https%3A%2F%2Fgithub.com%2FCMKIXVI%2Foopsmcp&from=templates&skippable-integrations=1)
+```text
+GitHub upstream
+      ↓
+User forks OopsMCP
+      ↓
+User's GitHub repository
+      ↓
+Vercel imports user's fork
+      ↓
+User's OopsMCP Studio + /mcp
+      ↓
+Optional Supabase + OopsFlow
+```
 
 ## Local
 
