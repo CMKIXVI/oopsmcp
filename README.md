@@ -2,31 +2,43 @@
 
 OopsMCP is a role-based MCP toolbox with 500 practical capabilities and a dedicated UI workspace for every tool.
 
-## 🚀 Deploy OopsMCP — Fork First, Deploy Second
+## Deploy OopsMCP — Fork First, Deploy Second
 
 **The intended flow is:**
 
-**Your GitHub → your fork → your Vercel → your OopsMCP**
+**Official GitHub → your fork → your Vercel → your OopsMCP**
 
-### 1. Fork OopsMCP to your GitHub
+### 1. Fork OopsMCP
 
 [**🍴 Fork OopsMCP**](https://github.com/CMKIXVI/oopsmcp/fork)
 
+Create the fork under the GitHub account that should own your installation.
+
 ### 2. Deploy your fork to Vercel
 
-After the fork is created, use the [**OopsMCP Help & Deploy page**](https://CMKIXVI.github.io/oopsmcp/) to enter your GitHub username and generate a Vercel deployment link for **your fork**.
+After the fork exists, import **your fork** into Vercel:
 
-This prevents the upstream `CMKIXVI/oopsmcp` repository from becoming the source of your personal deployment.
+`https://github.com/YOUR-GITHUB-USERNAME/oopsmcp`
 
-### 3. Configure Supabase if needed
+Do not deploy the upstream `CMKIXVI/oopsmcp` repository as your personal installation.
 
-Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` to the Vercel project when you want persistent authentication, memory and content storage.
+### 3. Configure your MCP address
+
+Your deployed MCP endpoint is:
+
+`https://YOUR-PROJECT.vercel.app/mcp`
+
+You can also configure a custom domain and use:
+
+`https://YOUR-DOMAIN/mcp`
+
+Use that address with your MCP-compatible clients.
 
 ## Complete Help
 
 - [Deployment guide](DEPLOY.md)
-- [GitHub Pages Help & Deploy](https://CMKIXVI.github.io/oopsmcp/)
 - [Install page](https://github.com/CMKIXVI/oopsmcp/tree/main/app/install)
+- [Official GitHub repository](https://github.com/CMKIXVI/oopsmcp)
 
 ## What is included
 
@@ -40,21 +52,22 @@ Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` to the
 - OopsFlow integration bundle
 - Docker deployment
 - Vercel deployment
-- GitHub Pages deployment/help center
 - PWA manifest
 
 ## Architecture
 
 ```text
-GitHub upstream
+CMKIXVI/oopsmcp
       ↓
-User forks OopsMCP
+   Fork first
       ↓
-User's GitHub repository
+YOUR-GITHUB-USERNAME/oopsmcp
       ↓
-Vercel imports user's fork
+Deploy your fork to Vercel
       ↓
-User's OopsMCP Studio + /mcp
+YOUR Vercel project
+      ↓
+Your OopsMCP Studio + /mcp
       ↓
 Optional Supabase + OopsFlow
 ```
@@ -70,7 +83,7 @@ Then open `http://localhost:3000`.
 
 ## MCP
 
-After deployment, use:
+After deployment:
 
 `https://YOUR_PROJECT.vercel.app/mcp`
 
